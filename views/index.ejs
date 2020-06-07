@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <head>
+        <meta charset="utf-8">
+        <title>WebWeatherApp</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    </head>
+
+    <div class="container">
+        <div style="text-align: center; margin-top: 50px; margin-bottom: 20px; color: blue;border-bottom: 2px solid #0F2692;font-weight: bold;">
+            <h2 title="WebWeatherApp">WebWeatherApp</h2>
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-between" id="main">
+                <div class="p-2 bd-highlight left">
+                    <fieldset>
+                        <form action=" /" method="post">
+                            <input name="city" type="text" class="ghost-input" placeholder="Enter the city name" required>
+                            <input type="submit" class="ghost-button" value="Get Weather">
+                        </form>
+                        <% if(weather !== null){ %>
+                            <p>Name:
+                                <%= weather.name %>
+                            </p>
+                            <p>Temperature:
+                                <%= weather.main.temp %>ºC
+                            </p>
+                            <p>Country:
+                                <%= weather.sys.country %>
+                            </p>
+                            <p>Weather:
+                                <%= weather.weather[0].description %>
+                            </p>
+                            <p>Humidity:
+                                <%= weather.main.humidity %>%</p>
+                            <% } %>
+
+                                <% if(error !== null){ %>
+                                    <p>
+                                        <%= error %>
+                                    </p>
+                                    <% } %>
+                    </fieldset>
+                </div>
+                <div class="p-2 bd-highlight" style="border-left: 2px solid #0F2692;">
+                    <div>
+                        <div class="d-flex flex-column bd-highlight mb-2" id="right">
+                            <div class="p-2 bd-highlight" id='right-inf' style="color: blue; border-bottom: 2px solid #0F2692;">
+                                Most 5 searchs
+
+                                <% findHistorys.forEach(function(findHistory) { %>
+                                    <p>
+                                        <%= findHistory.name %>
+                                    </p>
+                                    <% }); %>
+                            </div>
+                            <div class="p-2 bd-highlight" id="right-sup" style="color: blue">
+                                Last 5 recent searchs
+                                <% findLimits.forEach(function(findLimit) { %>
+                                    <p>
+                                        <%= findLimit.name %> -
+                                            <%=  findLimit.created_at %>
+                                    </p>
+                                    <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
