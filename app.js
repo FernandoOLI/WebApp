@@ -87,7 +87,8 @@ function compare(a, b) {
 
 
 app.post('/', function(req, res) {
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${req.body.city}&units=metric&appid=${apiKey}`
+    let city = req.body.city;
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
 
     request(url, function(err, response, body) {
         if (err) {
