@@ -31,7 +31,7 @@ p {
     color: #4b545f;
     background: #fff;
     font-family: Open Sans, Verdana;
-    padding: 10px 15px;
+    padding: 5px 10px;
     margin: 3px 0px;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
@@ -47,9 +47,11 @@ p {
 .ghost-button {
     background-color: transparent;
     border: 2px solid #ddd;
-    padding: 10px 30px;
-    width: 100%;
-    min-width: 600px;
+    padding: 10px 25px;
+    width: 10%;
+    margin-left: 200px;
+    margin-right: 200px;
+    min-width: 200px;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     -ms-transition: all 0.1s ease-in-out;

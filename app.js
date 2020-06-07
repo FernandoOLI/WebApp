@@ -6,6 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const request = require('request');
+const keyApi = require('./config/api')
 const _ = require("lodash");
 
 // set database
@@ -24,8 +25,6 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
     console.log('database error ' + err);
 });
-
-var Schema = mongoose.Schema;
 
 const app = express();
 
@@ -55,7 +54,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs')
 
-const apiKey = 'bc5a25a6f18ee8b5a3809325e9c09594';
+const apiKey = keyApi.apiKey;
 var logSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -70,11 +69,11 @@ var logSchema = new mongoose.Schema({
 var Logs = mongoose.model('Logs', logSchema);
 app.get('/', function(req, res, next) {
     Logs.find({}, function(err, results) {
+        //Get last 5 searchs
         var findLimits = results.sort(compare).slice(0, 5)
+            //Groupby name and order by count names
         var aux = _.countBy(results, 'name')
         var t = Object.keys(aux).sort(function(a, b) { return aux[b] - aux[a] }).slice(0, 5)
-        console.log(t)
-
         var findHistorys = t.map((str, index) => ({ name: str }));
         res.render('index', { findLimits: findLimits, findHistorys: findHistorys, weather: null, error: null });
     });
@@ -88,8 +87,7 @@ function compare(a, b) {
 
 
 app.post('/', function(req, res) {
-    let city = req.body.city;
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${req.body.city}&units=metric&appid=${apiKey}`
 
     request(url, function(err, response, body) {
         if (err) {
@@ -98,11 +96,11 @@ app.post('/', function(req, res) {
                 var findLimits = []
                 var findHistorys = []
                 if (results != null) {
+                    //Get last 5 searchs
                     var findLimits = results.sort(compare).slice(0, 5)
+                        //Groupby name and order by count names
                     var aux = _.countBy(results, 'name')
                     var t = Object.keys(aux).sort(function(a, b) { return aux[b] - aux[a] }).slice(0, 5)
-                    console.log(t)
-
                     var findHistorys = t.map((str, index) => ({ name: str }));
                 }
                 res.render('index', { findLimits: findLimits, findHistorys: findHistorys, weather: null, error: 'Error, please try again' });
@@ -118,11 +116,11 @@ app.post('/', function(req, res) {
                     var findLimits = []
                     var findHistorys = []
                     if (results != null) {
+                        //Get last 5 searchs
                         var findLimits = results.sort(compare).slice(0, 5)
+                            //Groupby name and order by count names
                         var aux = _.countBy(results, 'name')
                         var t = Object.keys(aux).sort(function(a, b) { return aux[b] - aux[a] }).slice(0, 5)
-                        console.log(t)
-
                         var findHistorys = t.map((str, index) => ({ name: str }));
                     }
                     res.render('index', { findLimits: findLimits, findHistorys: findHistorys, weather: null, error: 'Error, please try again' });
@@ -130,11 +128,11 @@ app.post('/', function(req, res) {
 
             } else {
                 Logs.find({}, function(err, results) {
+                    //Get last 5 searchs
                     var findLimits = results.sort(compare).slice(0, 5)
+                        //Groupby name and order by count names
                     var aux = _.countBy(results, 'name')
                     var t = Object.keys(aux).sort(function(a, b) { return aux[b] - aux[a] }).slice(0, 5)
-                    console.log(t)
-
                     var findHistorys = t.map((str, index) => ({ name: str }));
                     res.render('index', { findLimits: findLimits, findHistorys: findHistorys, weather: weather, error: null });
                 });

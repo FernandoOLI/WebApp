@@ -12,7 +12,9 @@
     </head>
 
     <div class="container">
-        <p title="We">WebWetherApp</p>
+        <div style="text-align: center; margin-top: 50px; margin-bottom: 20px; color: blue;border-bottom: 2px solid #0F2692;font-weight: bold;">
+            <h2 title="WebWetherApp">WebWetherApp</h2>
+        </div>
         <div class="row">
             <div class="d-flex justify-content-between" id="main">
                 <div class="p-2 bd-highlight left">
@@ -45,10 +47,10 @@
                                     <% } %>
                     </fieldset>
                 </div>
-                <div class="p-2 bd-highlight">
+                <div class="p-2 bd-highlight" style="border-left: 2px solid #0F2692;">
                     <div>
                         <div class="d-flex flex-column bd-highlight mb-2" id="right">
-                            <div class="p-2 bd-highlight" id='right-inf'>
+                            <div class="p-2 bd-highlight" id='right-inf' style="color: blue; border-bottom: 2px solid #0F2692;">
                                 Most 5 searchs
 
                                 <% findHistorys.forEach(function(findHistory) { %>
@@ -57,7 +59,7 @@
                                     </p>
                                     <% }); %>
                             </div>
-                            <div class="p-2 bd-highlight" id="right-sup">
+                            <div class="p-2 bd-highlight" id="right-sup" style="color: blue">
                                 Last 5 recent searchs
                                 <% findLimits.forEach(function(findLimit) { %>
                                     <p>
